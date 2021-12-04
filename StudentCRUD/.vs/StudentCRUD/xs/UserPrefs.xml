@@ -1,16 +1,24 @@
 ﻿<Properties StartupConfiguration="{460D8FF7-CC2D-4F3A-B0EF-86D3CE5065D2}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="StudentCRUD/Program.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="StudentCRUD/Controllers/StudentController.cs">
     <Files>
-      <File FileName="StudentCRUD/Program.cs" Line="27" Column="1" />
+      <File FileName="StudentCRUD/Controllers/StudentController.cs" Line="108" Column="1" />
+      <File FileName="StudentCRUD/Models/Country.cs" />
+      <File FileName="StudentCRUD/Models/Student.cs" />
+      <File FileName="StudentCRUD/SeedData/SeedData.cs" />
+      <File FileName="StudentCRUD/Program.cs" Line="22" Column="18" />
+      <File FileName="StudentCRUD/Startup.cs" />
+      <File FileName="StudentCRUD/Helper/StudentDBContext.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="StudentCRUD" expanded="True">
             <Node name="StudentCRUD" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Properties" expanded="True" />
-              <Node name="Program.cs" selected="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="StudentController.cs" selected="True" />
+              </Node>
+              <Node name="Helper" expanded="True" />
+              <Node name="SeedData" expanded="True" />
             </Node>
           </Node>
         </State>

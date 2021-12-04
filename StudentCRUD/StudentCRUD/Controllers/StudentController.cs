@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudentCRUD.Helper;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 namespace StudentCRUD.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("MyPolicy")]
     [ApiController]
     public class StudentController : ControllerBase
     {
@@ -25,8 +27,65 @@ namespace StudentCRUD.Controllers
             _mapper = mapper;
         }
 
+        [EnableCors("MyPolicy")]
+        [HttpGet("Studentperclass")]
+        public IDictionary<string,int> GetCountOfStudentsPerClass()
+        {
+            var studentPerClass = new Dictionary<string, int>();
+
+            var result =
+                from s in _dbContext.Student
+                join c in _dbContext.ClassEntities on s.ClassId equals c.Id
+                select new { s, c };
+            var result1 = from r in result
+                          group r by r.c.ClassName into group1
+                          select new
+                          {
+                              className = group1.Key,
+                              spc = group1.Count()
+                          };
+               foreach(var item in result1)
+            {
+                studentPerClass.Add(item.className, item.spc);
+            }
+            return studentPerClass;
+        }
+
+        [HttpGet("studentpercountry")]
+        public IDictionary<string, int> GetCountOfStudentsPerCountry()
+        {
+            var studentPerCountry = new Dictionary<string, int>();
+
+            var result =
+                from s in _dbContext.Student
+                join c in _dbContext.Country on s.CountryId equals c.Id
+                select new { s, c };
+            var result1 = from r in result
+                          group r by r.c.Name into group1
+                          select new
+                          {
+                              countryName = group1.Key,
+                              studentpercoutry = group1.Count()
+                          };
+            foreach (var item in result1)
+            {
+                studentPerCountry.Add(item.countryName, item.studentpercoutry);
+            }
+            return studentPerCountry;
+        }
+        [EnableCors("MyPolicy")]
+        [HttpGet("GetAverageAgePerStudent")]
+        public float GetAverageAgePerStudent()
+        {
+            var currentYear = System.DateTime.Now.Year;
+            var result = _dbContext.Student.Select(x => (currentYear - x.DateOfBirth.Year)).Average();
+
+            float Convertedvalue = (float)result;
+            return Convertedvalue;
+        }
+
         // GET: api/<StudentController>
-        [HttpGet]
+        [HttpGet("getstudent")]
         public async Task<ActionResult<IEnumerable<StudentViewModel>>> GetStudents()
         {
             var students =  await _dbContext.Student.ToListAsync();
